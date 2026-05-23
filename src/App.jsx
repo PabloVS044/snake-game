@@ -80,8 +80,23 @@ function App() {
   const [score, setScore] = useState(0)
   const [gameStatus, setGameStatus] = useState('idle')
 
+  function resetGame() {
+    setSnake(INITIAL_SNAKE)
+    setDirection(INITIAL_DIRECTION)
+    setNextDirection(INITIAL_DIRECTION)
+    setFood(getRandomFoodPosition(INITIAL_SNAKE))
+    setScore(0)
+    setGameStatus('idle')
+  }
+
   useEffect(() => {
     function handleKeyDown(event) {
+      if (gameStatus === 'gameOver' && (event.key === 'Enter' || event.key === ' ')) {
+        event.preventDefault()
+        resetGame()
+        return
+      }
+
       const pressedKey = event.key.length === 1 ? event.key.toLowerCase() : event.key
       const requestedDirection = DIRECTION_BY_KEY[pressedKey]
 
@@ -157,7 +172,7 @@ function App() {
     gameStatus === 'idle'
       ? 'Presiona una flecha o WASD para iniciar.'
       : gameStatus === 'gameOver'
-        ? 'Perdiste al chocar. La siguiente etapa agregará reinicio.'
+        ? 'Perdiste al chocar. Usa el boton o presiona Enter para reiniciar.'
         : 'Come la comida para crecer y sumar puntos.'
 
   return (
@@ -175,7 +190,12 @@ function App() {
             gameStatus={gameStatus}
           />
 
-          <Score score={score} gameStatus={gameStatus} message={message} />
+          <Score
+            score={score}
+            gameStatus={gameStatus}
+            message={message}
+            onReset={resetGame}
+          />
         </div>
       </section>
     </main>

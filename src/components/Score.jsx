@@ -1,4 +1,4 @@
-function Score({ score, gameStatus, message }) {
+function Score({ score, gameStatus, message, onReset }) {
   const statusLabel = {
     idle: 'Listo',
     running: 'Jugando',
@@ -23,6 +23,10 @@ function Score({ score, gameStatus, message }) {
         <span className="score-label">Controles</span>
         <p>Usa las flechas o WASD para mover la serpiente.</p>
       </div>
+
+      <button type="button" className="reset-button" onClick={onReset}>
+        Reiniciar
+      </button>
     </aside>
   )
 }

@@ -84,6 +84,22 @@
   z-index: 2;
 }
 
+.overlay-copy {
+  display: grid;
+  gap: 6px;
+  text-align: center;
+}
+
+.overlay-copy strong {
+  font-size: 1.5rem;
+}
+
+.overlay-copy span {
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
 .snake-segment,
 .food {
   margin: 3px;
@@ -151,6 +167,24 @@
 .controls-card p {
   margin: 0;
   color: var(--text-soft);
+}
+
+.reset-button {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #2c2c2c;
+  color: var(--text-strong);
+  cursor: pointer;
+}
+
+.reset-button:hover {
+  background: #353535;
+}
+
+.reset-button:focus-visible {
+  outline: 2px solid #f5f5f5;
+  outline-offset: 2px;
 }
 
 @media (max-width: 900px) {

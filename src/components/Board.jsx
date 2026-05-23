@@ -14,7 +14,10 @@ function Board({ boardSize, snakeSegments, foodPosition, gameStatus }) {
         <Food position={foodPosition} />
         {gameStatus === 'gameOver' ? (
           <div className="board-overlay" aria-label="Juego terminado">
-            Game Over
+            <div className="overlay-copy">
+              <strong>Game Over</strong>
+              <span>Presiona Enter o usa Reiniciar</span>
+            </div>
           </div>
         ) : null}
       </div>
