@@ -1,16 +1,52 @@
-# React + Vite
+# Snake Game con React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descripción
+Este proyecto es una implementación del juego clásico Snake desarrollada con React y Vite. El objetivo principal fue construir el juego con una estructura clara basada en componentes, props y estado.
 
-Currently, two official plugins are available:
+La aplicación incluye:
+- Movimiento de la serpiente con teclado.
+- Comida aleatoria.
+- Crecimiento al comer.
+- Puntaje.
+- Colisiones con paredes y con el propio cuerpo.
+- Pantalla de `Game Over`.
+- Reinicio del juego sin recargar la página.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tecnologías usadas
+- React
+- Vite
+- JavaScript con JSX
+- CSS
 
-## React Compiler
+## Instalación
+Desde la raíz del proyecto, ejecuta:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+```
 
-## Expanding the ESLint configuration
+## Ejecución
+Para iniciar el servidor de desarrollo:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm run dev
+```
+
+Luego abre en el navegador la URL que muestre Vite en la terminal, normalmente `http://localhost:5173`.
+
+## Cómo jugar
+- Presiona una flecha del teclado o `W`, `A`, `S`, `D` para iniciar.
+- Mueve la serpiente para comer la comida.
+- Cada comida aumenta el tamaño de la serpiente y suma 1 punto.
+- Evita chocar con las paredes.
+- Evita chocar con tu propio cuerpo.
+- Si pierdes, puedes reiniciar con el botón `Reiniciar`.
+- También puedes reiniciar presionando `Enter` cuando aparezca `Game Over`.
+
+## Scripts disponibles
+```bash
+npm run dev
+npm run build
+npm run preview
+npm run lint
+```
