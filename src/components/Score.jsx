@@ -1,4 +1,4 @@
-function Score({ score, gameStatus}) {
+function Score({ score, gameStatus, message }) {
   const statusLabel = {
     idle: 'Listo',
     running: 'Jugando',
@@ -12,10 +12,16 @@ function Score({ score, gameStatus}) {
         <strong className="score-value">{score}</strong>
       </div>
 
+      <div className="status-card">
+        <span className="score-label">Estado</span>
+        <strong className="status-value">{statusLabel}</strong>
+      </div>
+
+      <p className="helper-text">{message}</p>
 
       <div className="controls-card">
         <span className="score-label">Controles</span>
-        <p>Usa las flechas del teclado para mover la serpiente.</p>
+        <p>Usa las flechas o WASD para mover la serpiente.</p>
       </div>
     </aside>
   )
