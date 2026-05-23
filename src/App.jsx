@@ -33,10 +33,38 @@ function isOppositeDirection(currentDirection, nextDirection) {
   )
 }
 
+function isSamePosition(firstPosition, secondPosition) {
+  return firstPosition.x === secondPosition.x && firstPosition.y === secondPosition.y
+}
+
+function getRandomFoodPosition(snakeSegments) {
+  const occupiedCells = new Set(
+    snakeSegments.map((segment) => `${segment.x}-${segment.y}`),
+  )
+  const availableCells = []
+
+  for (let y = 0; y < BOARD_SIZE; y += 1) {
+    for (let x = 0; x < BOARD_SIZE; x += 1) {
+      if (!occupiedCells.has(`${x}-${y}`)) {
+        availableCells.push({ x, y })
+      }
+    }
+  }
+
+  if (availableCells.length === 0) {
+    return snakeSegments[snakeSegments.length - 1]
+  }
+
+  const randomIndex = Math.floor(Math.random() * availableCells.length)
+  return availableCells[randomIndex]
+}
+
 function App() {
   const [snake, setSnake] = useState(INITIAL_SNAKE)
   const [direction, setDirection] = useState(INITIAL_DIRECTION)
   const [nextDirection, setNextDirection] = useState(INITIAL_DIRECTION)
+  const [food, setFood] = useState(INITIAL_FOOD)
+  const [score, setScore] = useState(0)
   const [gameStatus, setGameStatus] = useState('idle')
 
   useEffect(() => {
@@ -82,6 +110,13 @@ function App() {
           y: head.y + nextDirection.y,
         }
 
+        if (isSamePosition(nextHead, food)) {
+          const grownSnake = [...currentSnake, nextHead]
+          setScore((currentScore) => currentScore + 1)
+          setFood(getRandomFoodPosition(grownSnake))
+          return grownSnake
+        }
+
         return [...currentSnake.slice(1), nextHead]
       })
     }, TICK_MS)
@@ -89,13 +124,12 @@ function App() {
     return () => {
       window.clearInterval(intervalId)
     }
-  }, [gameStatus, nextDirection])
+  }, [food, gameStatus, nextDirection])
 
-  const score = 0
   const message =
     gameStatus === 'idle'
       ? 'Presiona una flecha o WASD para iniciar.'
-      : 'La serpiente ya se mueve. En la siguiente etapa agregamos comida y puntaje.'
+      : 'Come la comida para crecer y sumar puntos.'
 
   return (
     <main className="app-shell">
@@ -108,7 +142,7 @@ function App() {
           <Board
             boardSize={BOARD_SIZE}
             snakeSegments={snake}
-            foodPosition={INITIAL_FOOD}
+            foodPosition={food}
             gameStatus={gameStatus}
           />
 
