@@ -12,6 +12,11 @@ function Board({ boardSize, snakeSegments, foodPosition, gameStatus }) {
         <div className="board-grid" aria-hidden="true" />
         <Snake segments={snakeSegments} />
         <Food position={foodPosition} />
+        {gameStatus === 'gameOver' ? (
+          <div className="board-overlay" aria-label="Juego terminado">
+            Game Over
+          </div>
+        ) : null}
       </div>
     </section>
   )

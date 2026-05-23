@@ -37,6 +37,19 @@ function isSamePosition(firstPosition, secondPosition) {
   return firstPosition.x === secondPosition.x && firstPosition.y === secondPosition.y
 }
 
+function hasWallCollision(position) {
+  return (
+    position.x < 0 ||
+    position.x >= BOARD_SIZE ||
+    position.y < 0 ||
+    position.y >= BOARD_SIZE
+  )
+}
+
+function hasSelfCollision(position, snakeSegments) {
+  return snakeSegments.some((segment) => isSamePosition(segment, position))
+}
+
 function getRandomFoodPosition(snakeSegments) {
   const occupiedCells = new Set(
     snakeSegments.map((segment) => `${segment.x}-${segment.y}`),
@@ -76,6 +89,10 @@ function App() {
         return
       }
 
+      if (gameStatus === 'gameOver') {
+        return
+      }
+
       event.preventDefault()
 
       if (isOppositeDirection(direction, requestedDirection)) {
@@ -109,8 +126,18 @@ function App() {
           x: head.x + nextDirection.x,
           y: head.y + nextDirection.y,
         }
+        const willEatFood = isSamePosition(nextHead, food)
+        const snakeBodyToCheck = willEatFood ? currentSnake : currentSnake.slice(1)
 
-        if (isSamePosition(nextHead, food)) {
+        if (
+          hasWallCollision(nextHead) ||
+          hasSelfCollision(nextHead, snakeBodyToCheck)
+        ) {
+          setGameStatus('gameOver')
+          return currentSnake
+        }
+
+        if (willEatFood) {
           const grownSnake = [...currentSnake, nextHead]
           setScore((currentScore) => currentScore + 1)
           setFood(getRandomFoodPosition(grownSnake))
@@ -129,7 +156,9 @@ function App() {
   const message =
     gameStatus === 'idle'
       ? 'Presiona una flecha o WASD para iniciar.'
-      : 'Come la comida para crecer y sumar puntos.'
+      : gameStatus === 'gameOver'
+        ? 'Perdiste al chocar. La siguiente etapa agregará reinicio.'
+        : 'Come la comida para crecer y sumar puntos.'
 
   return (
     <main className="app-shell">
